@@ -52,17 +52,18 @@
 
   <!-- build:css -->
   <!-- <link rel="stylesheet" rel="preload" href="{{root}}assets/css/main.css"> -->
-  <link rel="preload" href="{{root}}assets/css/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="{{root}}assets/css/main.css?time={{random 3}}" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
   <noscript>
-    <link rel="stylesheet" href="{{root}}assets/css/main.css">
+    <link rel="stylesheet" href="{{root}}assets/css/main.css?time={{random 3}}">
   </noscript>
   <!-- endbuild -->
   <script src="{{root}}assets/vendor/js/jquery.js"></script>
 </head>
 
 <body>
-  {{> _loader}}
-  {{> _navigation}}
+  {{!> _loader}}
+  {{!> _navigation}}
   <main role="main">
     {{> body}}
   </main>

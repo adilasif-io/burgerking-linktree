@@ -17,19 +17,23 @@ $danger:                        $red;
 $black:                       #000000;
 
 // Changing the theme colors
-$primary: #4188BD;
-$secondary: #3E4459;
-$success: #61BF60;
+$primary: #D62300;
+$secondary: #FF8732;
+$dark:     #502314;
+$black:     #000000;
+$white:    #FFFFFF;
+$body-bg:#F5EBDC;
+$success: #198737;
 $info: #5BC3D8;
-$warning: #F0A94C;
+$warning: #FFAA00;
 $danger: #D85250;
-$dark: #242424; 
 
+$font-family-base: "Flame", Arial, sans-serif;
 
 // Font Size
 $font-size-base:              1rem; // 16px
 $body-font-size:              $font-size-base; // 16px
-$font-size-multiplier:        1.25; // Multiplier for font size calculations
+$font-size-multiplier:        1.2; // Multiplier for font size calculations
 $h6-font-size:                $body-font-size * $font-size-multiplier; // 20px (1.25 * 16px)
 $h5-font-size:                $h6-font-size * $font-size-multiplier; // 25px (1.25 * 20px)
 $h4-font-size:                $h5-font-size * $font-size-multiplier; // 31.25px (1.25 * 25px)
@@ -70,3 +74,4 @@ $container-max-widths: (
 // SETTINGS
 // =============================================================================
 $dropdown-min-width: auto;
+$input-btn-border-width:2px;

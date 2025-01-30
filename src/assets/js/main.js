@@ -3,7 +3,7 @@
 $(document).ready(function () {
   showLoader();
   initializeSelect2();
-  initUserThemePreference();
+  // initUserThemePreference();
 
   setTimeout(function () {
     hideLoader();

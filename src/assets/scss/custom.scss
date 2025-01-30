@@ -2,5 +2,20 @@
     direction: ltr !important;
   }
   
+  .brand-logo-container{
+    width: 140px;
+  }
 
-  
+  .rise-shake {
+    animation: jump-shaking 2.75s infinite;
+  }
+
+  @keyframes jump-shaking {
+    0% { transform: translateX(0) rotate(0)}
+    35% { transform: translateY(0) rotate(0) }
+    85% { transform: translateY(0) rotate(0) }
+    89% { transform: translateY(-2px) rotate(-5deg)}
+    93% { transform: translateY(-3px) rotate(5deg)}
+    98% { transform: translateY(-4px) rotate(-5deg)}
+    100% { transform: translateY(0) rotate(0) }
+  }
