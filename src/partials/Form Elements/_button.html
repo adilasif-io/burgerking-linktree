@@ -1,5 +1,6 @@
 <a href="{{#unless ButtonUrl}}#{{else}}{{ButtonUrl}}{{/unless}}" id="{{ID}}" {{#if ModalId}}data-bs-toggle="modal"
     data-bs-target="#{{ModalId}}" {{/if}} class="btn {{Classes}}" localize-me>{{#if
     ButtonText}}{{ButtonText}}{{else}}Save{{/if}}
-    {{#if Badge}}<small class="badge badge-sm text-bg-primary fw-normal position-absolute top-0 end-0">{{Badge}}</small>
+    {{#if Badge}}<small
+        class="badge badge-sm text-bg-primary fw-normal position-absolute top-0 end-0 mt-1 me-1">{{Badge}}</small>
     {{/if}}</a>
