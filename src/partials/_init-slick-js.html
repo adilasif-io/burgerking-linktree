@@ -1,0 +1,17 @@
+<script>
+    $(document).ready(function () {
+        if ($('.{{SliderClass}}').children().length > 1) {
+            $('.{{SliderClass}}').slick({
+                rtl: false,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: true,
+                arrows: false,
+
+            });
+            if ($('html').attr('dir') == 'rtl') {
+                $('.{{SliderClass}}').slick('slickSetOption', 'rtl', true, false);
+            }
+        }
+    });
+</script>

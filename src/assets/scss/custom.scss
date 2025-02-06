@@ -19,3 +19,19 @@
     98% { transform: translateY(-4px) rotate(-5deg)}
     100% { transform: translateY(0) rotate(0) }
   }
+
+  .banner-slider{
+    .slick-dots li button:before{
+      content: "";
+      border-radius: 4px;
+      background-color: $light;
+      border: 2px solid $primary;
+      width: 15px;
+      height: 15px;
+      margin: 4px;
+      opacity: 1;
+    }
+    .slick-dots li.slick-active button:before{
+      background-color: $primary;
+    }
+  }

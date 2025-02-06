@@ -1,7 +1,7 @@
 "use strict";
 
 $(document).ready(function () {
-  showLoader();
+  // showLoader();
   initializeSelect2();
   // initUserThemePreference();
 
