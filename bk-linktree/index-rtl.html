@@ -71,6 +71,10 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12">
+                    <div id="deals-section">
+                    </div>
+                </div>
                 <div class="col-12" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500" data-aos-offset="-50" data-aos-delay="300">
                     <hr class="w-50 mx-auto my-0 border-secondary">
                 </div>
@@ -78,7 +82,7 @@
                     <h5 class="mb-0">Quick Links</h5>
                 </div>
                 <div class="col-12" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500" data-aos-offset="-50" data-aos-delay="300">
-                    <a href="https://www.bk.com.kw/coupons/" id="" class="btn btn-primary btn-lg w-100">Order Now 🍔</a>
+                    <a href="https://www.bk.com.kw/" id="" class="btn btn-primary btn-lg w-100">Order Now 🍔</a>
                 </div>
                 <div class="col-12" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500" data-aos-offset="-50" data-aos-delay="400">
                     <a href="https://www.bk.com.kw/menu/34199582-3f55-439e-9785-54cb6eb4b980" id="" class="btn btn-light border
@@ -208,39 +212,181 @@
         </script>
 
         <script>
-            var campaignStartDate = "2025-02-16T00:00:00";
-            var campaignEndDate = "2025-02-20T23:59:59";
+            // Function to make API call
+            async function fetchCampaignData() {
+                try {
+                    const response = await fetch('https://kfg.consulttechies.com/api/campaigns/valid');
+                    const data = await response.json();
 
-            // var campaignStartDate = "2025-02-11T15:40:20";
-            // var campaignEndDate = "2025-02-11T15:41:00";
+                    // Check if the response is a non-empty array
+                    if (Array.isArray(data) && data.length > 0) {
+                        // Create parent deal-sections and banner-slider containers
+                        const dealSections = document.createElement('div');
+                        dealSections.classList.add('row', 'g-3');
 
-            if (new Date() > new Date(campaignEndDate)) {
-                document.querySelectorAll(".deal-sections").forEach(section => section.style.display = "none");
+                        dealSections.innerHTML = `
+            <div class="col-12 deal-sections" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500"
+              data-aos-offset="-50" data-aos-delay="100">
+              <hr class="w-50 mx-auto my-0 border-secondary">
+            </div>
+            <div class="col-12 text-center deal-sections" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500"
+              data-aos-offset="-50" data-aos-delay="100">
+              <h5 class="mb-0">Deals & Offers</h5>
+            </div>
+            <div class="col-12 deal-sections" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500"
+              data-aos-offset="-50" data-aos-delay="200">
+              <div class="banner-slider has-slider"></div>
+            </div>
+          `;
+
+                        // Map through each object and generate the repeating banner HTML
+                        const bannersHTML = data.map(campaign => generateBannerHTML(campaign)).join('');
+
+                        // Append the generated banners to the banner-slider container
+                        dealSections.querySelector('.banner-slider').innerHTML = bannersHTML;
+
+                        // Append the entire deal-sections block to #deals-section
+                        document.querySelector('#deals-section').appendChild(dealSections);
+                    }
+
+                    // Get all elements with data-countdown-timer attribute and start the countdown for each
+                    document.querySelectorAll("[data-countdown-timer]").forEach(timerElement => {
+                        const targetDateStr = timerElement.getAttribute("data-countdown-timer");
+                        startCountdown(targetDateStr, timerElement);
+                    });
+                } catch (error) {
+                    console.error('Error fetching campaign data:', error);
+                }
             }
 
+            // Function to generate the banner HTML for each object
+            function generateBannerHTML(campaign) {
+                // console.log(campaign);
 
-            function startCountdown(targetDateStr) {
+                const now = new Date();
+                var targetDate;
+                if (new Date() < new Date(campaign.campaignStartDate))
+                    targetDate = new Date(campaign.campaignStartDate);
+                else
+                    targetDate = new Date(campaign.campaignEndDate);
+
+                const timeDifference = targetDate - now;
+
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+                var blurClass = campaign.title ? '' : 'blurred';
+                var noevents = campaign.title ? '' : 'no-events';
+                // console.log(timeDifference);
+                return `
+        <div class="banner mx-1">
+          <a href="${campaign.url || '#'}"
+            class="p-2 border border-2 border-primary text-bg-light rounded rounded-3 d-block ${noevents}">
+            <div class="row g-2">
+              <div class="col-12" data-countdown-timer="${targetDate || ''}">
+                <div class="row row-cols-5 justify-content-center gx-2">
+                  <div class="col">
+                    <div class="p-1 rounded-2 bg-primary text-light text-center w-100">
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="h3 m-0 days-value">${days || 0}</p>
+                        </div>
+                        <div class="col-12">
+                          <small class="m-0 d-block">Days</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="p-1 rounded-2 bg-primary text-light text-center w-100">
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="h3 m-0 hours-value">${hours || 0}</p>
+                        </div>
+                        <div class="col-12">
+                          <small class="m-0 d-block">Hours</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="p-1 rounded-2 bg-primary text-light text-center w-100">
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="h3 m-0 minutes-value">${minutes || 0}</p>
+                        </div>
+                        <div class="col-12">
+                          <small class="m-0 d-block">Minutes</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="p-1 rounded-2 bg-primary text-light text-center w-100">
+                      <div class="row">
+                        <div class="col-12">
+                          <p class="h3 m-0 seconds-value">${seconds || 0}</p>
+                        </div>
+                        <div class="col-12">
+                          <small class="m-0 d-block">Seconds</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="row g-2 blur-item ${blurClass}" data-content="Coming Soon">
+                  <div class="col-12 text-center">
+                    <img src="${campaign.image}" width="450" height="150" class="img-fluid rounded rounded-3" alt="Banner Image">
+                  </div>
+                  <div class="col-12">
+                    <div class="row">
+                      <div class="col d-flex align-items-center">
+                        <h6 class="text-primary m-0">
+                          <span class="d-block ms-3">${campaign.title || 'Coming Soon!'}</span>
+                        </h6>
+                      </div>
+                      <div class="col-auto">
+                        <div class="btn btn-primary">
+                          <i class="${campaign.icon || 'fas fa-arrow-right'}"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      `;
+            }
+
+            // Call the function to initiate the process
+            fetchCampaignData();
+
+            function startCountdown(targetDateStr, element) {
                 const targetDate = new Date(targetDateStr);
+                let timerInterval; // Declare timerInterval at the top
 
                 function updateCountdown() {
                     const now = new Date();
                     const timeDifference = targetDate - now;
 
                     if (timeDifference <= 0) {
-                        clearInterval(timerInterval);
-                        document.getElementById("days-value").textContent = "0";
-                        document.getElementById("hours-value").textContent = "0";
-                        document.getElementById("minutes-value").textContent = "0";
-                        document.getElementById("seconds-value").textContent = "0";
-                        if (new Date() > new Date(campaignStartDate) && new Date() < new Date(campaignEndDate)) {
-                            startCountdown(campaignEndDate);
-                            $(".blur-item").removeClass("blurred");
-                            $(".no-events").removeClass("no-events");
-                        } else {
-                            if (new Date() >= new Date(campaignEndDate)) {
-                                $(".deal-sections").hide();
-                            }
-                        }
+                        clearInterval(timerInterval); // This now works because timerInterval is declared
+
+                        element.querySelector(".days-value").textContent = "0";
+                        element.querySelector(".hours-value").textContent = "0";
+                        element.querySelector(".minutes-value").textContent = "0";
+                        element.querySelector(".seconds-value").textContent = "0";
+
+                        // Corrected way to remove all deal sections
+                        setTimeout(() => {
+                            document.querySelectorAll(".deal-sections").forEach(section => section.remove());
+                        }, 1000); // 1 second delay before removal (adjust as needed)
+
                         return;
                     }
 
@@ -249,31 +395,15 @@
                     const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
                     const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
-                    document.getElementById("days-value").textContent = days;
-                    document.getElementById("hours-value").textContent = hours;
-                    document.getElementById("minutes-value").textContent = minutes;
-                    document.getElementById("seconds-value").textContent = seconds;
+                    element.querySelector(".days-value").textContent = days;
+                    element.querySelector(".hours-value").textContent = hours;
+                    element.querySelector(".minutes-value").textContent = minutes;
+                    element.querySelector(".seconds-value").textContent = seconds;
                 }
 
                 updateCountdown(); // Update immediately before interval starts
-                const timerInterval = setInterval(updateCountdown, 1000);
+                timerInterval = setInterval(updateCountdown, 1000);
             }
-            $(function() {
-                if ($("#days-value").length > 0) {
-                    if (new Date() < new Date(campaignStartDate))
-                        startCountdown(campaignStartDate);
-                    else
-                    if (new Date() > new Date(campaignStartDate) && new Date() < new Date(campaignEndDate)) {
-                        startCountdown(campaignEndDate);
-                        $(".blur-item").removeClass("blurred");
-                        $(".no-events").removeClass("no-events");
-                    } else {
-                        if (new Date() > new Date(campaignEndDate)) {
-                            $(".deal-sections").hide();
-                        }
-                    }
-                }
-            });
         </script>
     </main>
     <script src="assets/vendor/js/anime.min.js"></script>
