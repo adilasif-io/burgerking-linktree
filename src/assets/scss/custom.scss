@@ -2,6 +2,42 @@
     direction: ltr !important;
   }
   
+  body{
+    background-image: url("../../assets/img/bg-pattern.webp");
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    padding-top: 30px;
+    &::before{
+      content: "";
+      position: absolute;
+      background-image: url("../../assets/img/lantern-right.webp");
+      top: 0;
+      right: 0;
+      height: 33%;
+      width: 28%;
+      z-index: -1;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: top right;
+    }
+    &::after{
+      content: "";
+      position: absolute;
+      background-image: url("../../assets/img/lantern-left.webp");
+      top: 0;
+      left: 0;
+      height: 33%;
+      width: 28%;
+      z-index: -1;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: top left;
+    }
+  }
+
+
+
   .brand-logo-container{
     width: 140px;
   }
