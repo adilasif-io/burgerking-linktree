@@ -29457,6 +29457,11 @@ footer {
   direction: rtl !important;
 }
 
+body {
+  position: relative;
+  padding-top: 30px;
+}
+
 .brand-logo-container {
   width: 140px;
 }
